@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏡 Desa Cibodas — Company Profile
 
-## Getting Started
+Website company profile desa dibangun dengan **Next.js 16** (App Router, Turbopack) dan **Supabase** (Auth + Postgres + RLS).
 
-First, run the development server:
+## ✨ Fitur
+
+- **Halaman publik** — landing page, profil desa (sejarah, visi, misi), statistik penduduk, peta desa (Google Maps embed), dan daftar informasi (pengumuman, berita, kegiatan, layanan).
+- **Login user** — autentikasi email/kata sandi via Supabase Auth, sesi dikelola lewat `proxy.ts` (pengganti middleware di Next.js 16).
+- **Dashboard desa** — ringkasan data serta CRUD untuk:
+  - Profil desa (deskripsi, visi misi, kontak, peta)
+  - Statistik penduduk per tahun
+  - Informasi desa (buat, edit, publikasikan/sembunyikan, hapus)
+
+## 🚀 Menjalankan Proyek
+
+### 1. Siapkan Supabase
+
+1. Buat project baru di [supabase.com](https://supabase.com).
+2. Buka **SQL Editor**, jalankan seluruh isi [`supabase/schema.sql`](supabase/schema.sql) (membuat tabel, RLS policy, dan data awal).
+3. Buat user admin: **Authentication → Users → Add user** (email + password, centang auto-confirm).
+
+### 2. Konfigurasi environment
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Isi dengan kredensial dari **Project Settings → API**:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Jalankan
 
-## Learn More
+```bash
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Buka [http://localhost:3000](http://localhost:3000), lalu login di `/login` menggunakan user admin yang dibuat di langkah 1.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🗂️ Struktur Utama
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+├── page.tsx                  # Landing page publik
+├── profil/                   # Profil desa (publik)
+├── informasi/                # Daftar & detail informasi (publik)
+├── login/                    # Halaman login + server actions auth
+└── dashboard/                # Area admin (dilindungi proxy + layout)
+    ├── actions.ts            # Server actions CRUD
+    ├── profil/               # Edit profil & peta desa
+    ├── penduduk/             # CRUD statistik penduduk
+    └── informasi/            # CRUD informasi desa
+lib/
+├── supabase/                 # Client browser, server, dan session proxy
+├── queries.ts                # Query data server-side
+└── types.ts                  # Tipe data tabel
+proxy.ts                      # Next.js 16 Proxy (refresh sesi + proteksi rute)
+supabase/schema.sql           # Skema database + RLS + seed
+```
 
-## Deploy on Vercel
+## 🔐 Keamanan
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Row Level Security aktif di semua tabel: publik hanya bisa membaca, penulisan hanya untuk user terautentikasi.
+- Semua server action memverifikasi sesi (`supabase.auth.getUser()`) sebelum mutasi.
+- Rute `/dashboard/*` dilindungi ganda: di `proxy.ts` dan di layout dashboard.
