@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { href: "/dashboard/profil", label: "Profil Desa", icon: "🏡" },
   { href: "/dashboard/penduduk", label: "Penduduk", icon: "👥" },
   { href: "/dashboard/informasi", label: "Informasi", icon: "📢" },
+  { href: "/dashboard/galeri", label: "Galeri", icon: "🖼️" },
 ];
 
 export default async function DashboardLayout({

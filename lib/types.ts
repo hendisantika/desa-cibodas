@@ -35,6 +35,16 @@ export const INFO_CATEGORIES = [
 
 export type InfoCategory = (typeof INFO_CATEGORIES)[number];
 
+export type GalleryPhoto = {
+  id: string;
+  caption: string | null;
+  storage_path: string;
+  sort_order: number;
+  created_at: string;
+  /** URL publik siap pakai (dibangun di server dari storage_path) */
+  url: string;
+};
+
 export type VillageInfo = {
   id: string;
   title: string;

@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { PhotoCarousel } from "@/components/photo-carousel";
 import {
+  getGalleryPhotos,
   getPopulationStats,
   getPublishedInfo,
   getVillageProfile,
@@ -14,10 +16,11 @@ import {
 } from "@/lib/utils";
 
 export default async function HomePage() {
-  const [profile, stats, latestInfo] = await Promise.all([
+  const [profile, stats, latestInfo, photos] = await Promise.all([
     getVillageProfile(),
     getPopulationStats(),
     getPublishedInfo(3),
+    getGalleryPhotos(),
   ]);
 
   const latest = stats[0];
@@ -55,6 +58,18 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Galeri Foto */}
+        {photos.length > 0 && (
+          <section className="mx-auto max-w-6xl px-4 pt-16 sm:px-6">
+            <h2 className="text-center text-2xl font-bold text-gray-900">
+              Galeri Desa
+            </h2>
+            <div className="mt-8">
+              <PhotoCarousel photos={photos} />
+            </div>
+          </section>
+        )}
 
         {/* Statistik Penduduk */}
         <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">

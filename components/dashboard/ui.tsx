@@ -12,6 +12,10 @@ const ERROR_MESSAGES: Record<string, string> = {
   tahun: "Tahun tidak valid.",
   wajib: "Judul dan isi wajib diisi.",
   simpan: "Gagal menyimpan data. Coba lagi.",
+  foto: "Pilih file foto terlebih dahulu.",
+  tipe: "Format foto harus JPG, PNG, atau WebP.",
+  ukuran: "Ukuran foto maksimal 5MB.",
+  penuh: "Galeri sudah penuh (maksimal 5 foto). Hapus salah satu foto dulu.",
 };
 
 export function Alert({

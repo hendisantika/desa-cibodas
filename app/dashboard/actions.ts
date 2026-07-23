@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { MAX_GALLERY_PHOTOS } from "@/lib/queries";
 import { INFO_CATEGORIES, type InfoCategory } from "@/lib/types";
 
 async function requireAuth() {
@@ -210,4 +211,127 @@ export async function deleteVillageInfo(formData: FormData) {
 
   revalidatePath("/", "layout");
   redirect("/dashboard/informasi?deleted=1");
+}
+
+// ---------------------------------------------------------------
+// Galeri Foto (maks 5 foto untuk carousel)
+// ---------------------------------------------------------------
+const MAX_PHOTO_BYTES = 5 * 1024 * 1024; // 5MB
+const ALLOWED_PHOTO_TYPES: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+};
+
+export async function uploadGalleryPhoto(formData: FormData) {
+  const supabase = await requireAuth();
+
+  const file = formData.get("photo");
+  if (!(file instanceof File) || file.size === 0) {
+    redirect("/dashboard/galeri?error=foto");
+  }
+
+  const ext = ALLOWED_PHOTO_TYPES[file.type];
+  if (!ext) redirect("/dashboard/galeri?error=tipe");
+  if (file.size > MAX_PHOTO_BYTES) redirect("/dashboard/galeri?error=ukuran");
+
+  const { count } = await supabase
+    .from("gallery_photos")
+    .select("*", { count: "exact", head: true });
+  if ((count ?? 0) >= MAX_GALLERY_PHOTOS) {
+    redirect("/dashboard/galeri?error=penuh");
+  }
+
+  const storagePath = `photos/${crypto.randomUUID()}.${ext}`;
+  const { error: uploadError } = await supabase.storage
+    .from("gallery")
+    .upload(storagePath, file, { contentType: file.type });
+  if (uploadError) {
+    console.error("uploadGalleryPhoto storage:", uploadError.message);
+    redirect("/dashboard/galeri?error=simpan");
+  }
+
+  const { error: insertError } = await supabase.from("gallery_photos").insert({
+    caption: toText(formData.get("caption")),
+    storage_path: storagePath,
+    sort_order: (count ?? 0) + 1,
+  });
+  if (insertError) {
+    await supabase.storage.from("gallery").remove([storagePath]);
+    redirect("/dashboard/galeri?error=simpan");
+  }
+
+  revalidatePath("/", "layout");
+  redirect("/dashboard/galeri?saved=1");
+}
+
+export async function updateGalleryCaption(formData: FormData) {
+  const supabase = await requireAuth();
+
+  const id = String(formData.get("id") ?? "");
+  if (id) {
+    await supabase
+      .from("gallery_photos")
+      .update({ caption: toText(formData.get("caption")) })
+      .eq("id", id);
+  }
+
+  revalidatePath("/", "layout");
+  redirect("/dashboard/galeri?saved=1");
+}
+
+export async function moveGalleryPhoto(formData: FormData) {
+  const supabase = await requireAuth();
+
+  const id = String(formData.get("id") ?? "");
+  const direction = String(formData.get("direction") ?? "");
+  if (!id || (direction !== "up" && direction !== "down")) {
+    redirect("/dashboard/galeri");
+  }
+
+  const { data: photos } = await supabase
+    .from("gallery_photos")
+    .select("id, sort_order")
+    .order("sort_order", { ascending: true });
+
+  const list = photos ?? [];
+  const idx = list.findIndex((p) => p.id === id);
+  const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+
+  if (idx !== -1 && swapIdx >= 0 && swapIdx < list.length) {
+    const a = list[idx];
+    const b = list[swapIdx];
+    await supabase
+      .from("gallery_photos")
+      .update({ sort_order: b.sort_order })
+      .eq("id", a.id);
+    await supabase
+      .from("gallery_photos")
+      .update({ sort_order: a.sort_order })
+      .eq("id", b.id);
+  }
+
+  revalidatePath("/", "layout");
+  redirect("/dashboard/galeri");
+}
+
+export async function deleteGalleryPhoto(formData: FormData) {
+  const supabase = await requireAuth();
+
+  const id = String(formData.get("id") ?? "");
+  if (id) {
+    const { data: photo } = await supabase
+      .from("gallery_photos")
+      .select("storage_path")
+      .eq("id", id)
+      .maybeSingle();
+
+    await supabase.from("gallery_photos").delete().eq("id", id);
+    if (photo?.storage_path) {
+      await supabase.storage.from("gallery").remove([photo.storage_path]);
+    }
+  }
+
+  revalidatePath("/", "layout");
+  redirect("/dashboard/galeri?deleted=1");
 }

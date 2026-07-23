@@ -1,5 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
-import type { PopulationStat, VillageInfo, VillageProfile } from "@/lib/types";
+import type {
+  GalleryPhoto,
+  PopulationStat,
+  VillageInfo,
+  VillageProfile,
+} from "@/lib/types";
 
 export async function getVillageProfile(): Promise<VillageProfile | null> {
   const supabase = await createClient();
@@ -62,6 +67,28 @@ export async function getInfoById(id: string): Promise<VillageInfo | null> {
     return null;
   }
   return data;
+}
+
+export const MAX_GALLERY_PHOTOS = 5;
+
+export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("gallery_photos")
+    .select("*")
+    .order("sort_order", { ascending: true })
+    .limit(MAX_GALLERY_PHOTOS);
+
+  if (error) {
+    console.error("getGalleryPhotos:", error.message);
+    return [];
+  }
+
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  return (data ?? []).map((photo) => ({
+    ...photo,
+    url: `${base}/storage/v1/object/public/gallery/${photo.storage_path}`,
+  }));
 }
 
 export async function getAllInfo(): Promise<VillageInfo[]> {
