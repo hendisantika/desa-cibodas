@@ -146,3 +146,38 @@ insert into public.village_info (title, content, category) values
   ('Jadwal Posyandu Bulan Ini', 'Posyandu Melati akan dilaksanakan setiap hari Rabu minggu kedua di Balai Desa Buninagara mulai pukul 08.00 WIB.', 'pengumuman'),
   ('Kerja Bakti Membersihkan Saluran Irigasi', 'Warga RW 03 mengadakan kerja bakti membersihkan saluran irigasi guna menyambut musim tanam.', 'kegiatan'),
   ('Layanan Pembuatan Surat Keterangan', 'Pelayanan administrasi surat keterangan dibuka Senin–Jumat pukul 08.00–15.00 WIB di Kantor Desa.', 'layanan');
+
+-- ---------------------------------------------------------------
+-- 4. Galeri Foto (maksimal 5 foto terbaik untuk carousel)
+-- ---------------------------------------------------------------
+create table if not exists public.gallery_photos (
+  id           uuid primary key default gen_random_uuid(),
+  caption      text,
+  storage_path text not null,
+  sort_order   int not null default 1,
+  created_at   timestamptz not null default now()
+);
+
+alter table public.gallery_photos enable row level security;
+
+drop policy if exists "Public read gallery" on public.gallery_photos;
+create policy "Public read gallery" on public.gallery_photos
+  for select using (true);
+
+drop policy if exists "Authenticated write gallery" on public.gallery_photos;
+create policy "Authenticated write gallery" on public.gallery_photos
+  for all to authenticated using (true) with check (true);
+
+-- Bucket penyimpanan foto (public read)
+insert into storage.buckets (id, name, public)
+values ('gallery', 'gallery', true)
+on conflict (id) do nothing;
+
+drop policy if exists "Public read gallery objects" on storage.objects;
+create policy "Public read gallery objects" on storage.objects
+  for select using (bucket_id = 'gallery');
+
+drop policy if exists "Authenticated write gallery objects" on storage.objects;
+create policy "Authenticated write gallery objects" on storage.objects
+  for all to authenticated
+  using (bucket_id = 'gallery') with check (bucket_id = 'gallery');
