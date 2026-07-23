@@ -2,6 +2,8 @@
 
 Website company profile desa dibangun dengan **Next.js 16** (App Router, Turbopack) dan **Supabase** (Auth + Postgres + RLS).
 
+🌐 **Live:** [desa-cibodas.vercel.app](https://desa-cibodas.vercel.app)
+
 ## ✨ Fitur
 
 - **Halaman publik** — landing page, profil desa (sejarah, visi, misi), statistik penduduk, peta desa (Google Maps embed), dan daftar informasi (pengumuman, berita, kegiatan, layanan).
