@@ -10,8 +10,8 @@ import {
 } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Informasi | Desa Cibodas",
-  description: "Pengumuman, berita, kegiatan, dan layanan Desa Cibodas",
+  title: "Informasi | Desa Buninagara",
+  description: "Pengumuman, berita, kegiatan, dan layanan Desa Buninagara",
 };
 
 export default async function InformasiPage() {

@@ -34,7 +34,7 @@ export default async function HomePage() {
               Selamat Datang di Website Resmi
             </p>
             <h1 className="text-4xl font-extrabold sm:text-5xl">
-              {profile?.name ?? "Desa Cibodas"}
+              {profile?.name ?? "Desa Buninagara"}
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-emerald-100">
               {profile?.slogan ?? "Desa Asri, Mandiri, dan Sejahtera"}
@@ -91,7 +91,7 @@ export default async function HomePage() {
           <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center">
             <div>
               <h2 className="text-2xl font-bold text-gray-900">
-                Tentang {profile?.name ?? "Desa Cibodas"}
+                Tentang {profile?.name ?? "Desa Buninagara"}
               </h2>
               <p className="mt-4 leading-relaxed text-gray-600">
                 {profile?.description ??

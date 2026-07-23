@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Desa Cibodas — Website Resmi",
+  title: "Desa Buninagara — Website Resmi",
   description:
-    "Website resmi Desa Cibodas: profil desa, statistik penduduk, peta desa, dan informasi terbaru.",
+    "Website resmi Desa Buninagara: profil desa, statistik penduduk, peta desa, dan informasi terbaru.",
 };
 
 export default function RootLayout({

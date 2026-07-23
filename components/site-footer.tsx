@@ -7,7 +7,7 @@ export function SiteFooter({ profile }: { profile: VillageProfile | null }) {
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-3 sm:px-6">
         <div>
           <p className="flex items-center gap-2 text-base font-bold text-gray-900">
-            <span>🏡</span> {profile?.name ?? "Desa Cibodas"}
+            <span>🏡</span> {profile?.name ?? "Desa Buninagara"}
           </p>
           <p className="mt-2 text-sm leading-relaxed text-gray-500">
             {profile?.slogan ?? "Desa Asri, Mandiri, dan Sejahtera"}
@@ -46,7 +46,7 @@ export function SiteFooter({ profile }: { profile: VillageProfile | null }) {
       </div>
 
       <div className="border-t border-gray-100 py-4 text-center text-xs text-gray-400">
-        © {new Date().getFullYear()} Pemerintah {profile?.name ?? "Desa Cibodas"}
+        © {new Date().getFullYear()} Pemerintah {profile?.name ?? "Desa Buninagara"}
         . Seluruh hak cipta.
       </div>
     </footer>

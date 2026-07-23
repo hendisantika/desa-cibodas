@@ -1,4 +1,4 @@
-# 🏡 Desa Cibodas — Company Profile
+# 🏡 Desa Buninagara — Company Profile
 
 Website company profile desa dibangun dengan **Next.js 16** (App Router, Turbopack) dan **Supabase** (Auth + Postgres + RLS).
 

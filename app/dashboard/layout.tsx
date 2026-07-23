@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { logout } from "@/app/login/actions";
 
 export const metadata: Metadata = {
-  title: "Dashboard | Desa Cibodas",
+  title: "Dashboard | Desa Buninagara",
 };
 
 const NAV_ITEMS = [

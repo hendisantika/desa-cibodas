@@ -1,5 +1,5 @@
 -- =============================================================
--- Skema Database Company Profile Desa Cibodas
+-- Skema Database Company Profile Desa Buninagara
 -- Jalankan di Supabase Dashboard → SQL Editor
 -- =============================================================
 
@@ -121,18 +121,18 @@ insert into public.village_profile
   (id, name, slogan, description, history, vision, mission, address, phone, email, map_embed_url, latitude, longitude)
 values (
   1,
-  'Desa Cibodas',
+  'Desa Buninagara',
   'Desa Asri, Mandiri, dan Sejahtera',
-  'Desa Cibodas adalah desa yang terletak di kawasan pegunungan dengan udara sejuk, panorama alam yang indah, serta masyarakat yang ramah dan menjunjung tinggi gotong royong.',
-  'Desa Cibodas berdiri sejak masa kolonial dan berkembang menjadi desa agraris dengan mayoritas penduduk bermata pencaharian sebagai petani dan pelaku UMKM.',
-  'Terwujudnya Desa Cibodas yang maju, mandiri, dan sejahtera berlandaskan gotong royong.',
+  'Desa Buninagara adalah desa di Kecamatan Kutawaringin, Kabupaten Bandung, Provinsi Jawa Barat, dengan masyarakat yang ramah dan menjunjung tinggi gotong royong.',
+  'Desa Buninagara merupakan salah satu desa di Kecamatan Kutawaringin, Kabupaten Bandung, yang berkembang menjadi desa agraris dengan mayoritas penduduk bermata pencaharian sebagai petani dan pelaku UMKM.',
+  'Terwujudnya Desa Buninagara yang maju, mandiri, dan sejahtera berlandaskan gotong royong.',
   E'1. Meningkatkan kualitas pelayanan publik desa.\n2. Mengembangkan potensi pertanian dan UMKM lokal.\n3. Membangun infrastruktur desa yang merata.\n4. Meningkatkan kualitas pendidikan dan kesehatan masyarakat.',
-  'Jl. Raya Cibodas No. 1, Kec. Lembang, Kab. Bandung Barat, Jawa Barat',
+  'Desa Buninagara, Kec. Kutawaringin, Kab. Bandung, Provinsi Jawa Barat',
   '(022) 1234567',
-  'pemdes@cibodas.desa.id',
-  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.0!2d107.65!3d-6.83!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0:0x0!2zNsKwNDknNDguMCJTIDEwN8KwMzknMDAuMCJF!5e0!3m2!1sid!2sid!4v1700000000000',
-  -6.83,
-  107.65
+  'pemdes@buninagara.desa.id',
+  'https://maps.google.com/maps?q=Desa%20Buninagara%2C%20Kutawaringin%2C%20Kabupaten%20Bandung&z=14&output=embed',
+  -7.01,
+  107.47
 )
 on conflict (id) do nothing;
 
@@ -143,6 +143,6 @@ insert into public.population_stats (year, male, female, households) values
 on conflict (year) do nothing;
 
 insert into public.village_info (title, content, category) values
-  ('Jadwal Posyandu Bulan Ini', 'Posyandu Melati akan dilaksanakan setiap hari Rabu minggu kedua di Balai Desa Cibodas mulai pukul 08.00 WIB.', 'pengumuman'),
+  ('Jadwal Posyandu Bulan Ini', 'Posyandu Melati akan dilaksanakan setiap hari Rabu minggu kedua di Balai Desa Buninagara mulai pukul 08.00 WIB.', 'pengumuman'),
   ('Kerja Bakti Membersihkan Saluran Irigasi', 'Warga RW 03 mengadakan kerja bakti membersihkan saluran irigasi guna menyambut musim tanam.', 'kegiatan'),
   ('Layanan Pembuatan Surat Keterangan', 'Pelayanan administrasi surat keterangan dibuka Senin–Jumat pukul 08.00–15.00 WIB di Kantor Desa.', 'layanan');

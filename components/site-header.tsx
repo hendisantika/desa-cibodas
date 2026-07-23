@@ -20,7 +20,7 @@ export async function SiteHeader() {
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-100 text-lg">
             🏡
           </span>
-          <span className="text-lg font-bold text-gray-900">Desa Cibodas</span>
+          <span className="text-lg font-bold text-gray-900">Desa Buninagara</span>
         </Link>
 
         <nav className="hidden items-center gap-6 sm:flex">

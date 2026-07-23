@@ -4,8 +4,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { getVillageProfile } from "@/lib/queries";
 
 export const metadata: Metadata = {
-  title: "Profil Desa | Desa Cibodas",
-  description: "Profil, sejarah, visi, dan misi Desa Cibodas",
+  title: "Profil Desa | Desa Buninagara",
+  description: "Profil, sejarah, visi, dan misi Desa Buninagara",
 };
 
 export default async function ProfilPage() {
@@ -18,7 +18,7 @@ export default async function ProfilPage() {
         <section className="bg-gradient-to-br from-emerald-600 to-teal-700 text-white">
           <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
             <h1 className="text-3xl font-extrabold">
-              Profil {profile?.name ?? "Desa Cibodas"}
+              Profil {profile?.name ?? "Desa Buninagara"}
             </h1>
             <p className="mt-2 text-emerald-100">{profile?.slogan}</p>
           </div>

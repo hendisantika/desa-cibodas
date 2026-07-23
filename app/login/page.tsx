@@ -3,8 +3,8 @@ import Link from "next/link";
 import { LoginForm } from "./login-form";
 
 export const metadata: Metadata = {
-  title: "Masuk | Desa Cibodas",
-  description: "Masuk ke dashboard administrasi Desa Cibodas",
+  title: "Masuk | Desa Buninagara",
+  description: "Masuk ke dashboard administrasi Desa Buninagara",
 };
 
 export default async function LoginPage({
@@ -22,7 +22,7 @@ export default async function LoginPage({
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-2xl">
               🏡
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Desa Cibodas</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Desa Buninagara</h1>
             <p className="mt-1 text-sm text-gray-500">
               Masuk untuk mengelola informasi desa
             </p>
