@@ -2,7 +2,7 @@
 
 Website company profile desa dibangun dengan **Next.js 16** (App Router, Turbopack) dan **Supabase** (Auth + Postgres + RLS).
 
-🌐 **Live:** [desa-cibodas.vercel.app](https://desa-cibodas.vercel.app)
+🌐 **Live:** [desa-buninagara.vercel.app](https://desa-buninagara.vercel.app)
 
 ## ✨ Fitur
 
